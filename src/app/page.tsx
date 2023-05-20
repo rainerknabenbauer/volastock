@@ -1,95 +1,78 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import React from 'react';
+import { Grid, TextField, FormControl, FormGroup, FormLabel } from '@mui/material';
+import Box from '@mui/material/Box';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+const data = [
+  {
+    name: 'Initial',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+    brb: 2000
+  },
+  {
+    name: 'Result',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+    brb: 2000
+  }
+];
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+export default function Page() {
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+    const priceLabel = "Price per piece"
+    const textFieldPadding = 2
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    return (
+        <Box sx={{ flexGrow: 1, height: '100vh' }}>
+          <Grid container spacing={2} style={{ height: '100%', display: 'flex', alignItems: 'stretch' }}>
+            <Grid item xs={6} md={4} style={{ display: 'flex' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart width={300} height={100} data={data}>
+                    <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
+                    <Line type="monotone" dataKey="uv" stroke="#8884d8" strokeWidth={2} />
+                    <Line type="monotone" dataKey="amt" stroke="#8884d8" strokeWidth={2} />
+                    <Line type="monotone" dataKey="brb" stroke="#8884d8" strokeWidth={2} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </Grid>
+            <Grid item xs={6} md={8} style={{ display: 'flex' }}>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Buy</FormLabel>
+                  <FormGroup>
+                    <TextField id="buy-price" label={priceLabel} variant="filled" helperText="per piece"/>
+                    <TextField id="buy-volume" label="Volume" variant="filled" helperText="total investment"/>
+                  </FormGroup>
+                </FormControl>
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Sell</FormLabel>
+                  <FormGroup>
+                    <TextField id="filled-basic" label={priceLabel} variant="filled" helperText="per piece"/>
+                    <TextField helperText="Future target price" id="filled-basic" label={priceLabel} variant="filled" />
+                  </FormGroup>
+                </FormControl>
+
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">Rebuy</FormLabel>
+                  <FormGroup>
+                      <TextField helperText="Lowest rebuy" id="filled-basic" label={priceLabel} variant="filled" />
+                      <TextField helperText="Median rebuy" id="filled-basic" label={priceLabel} variant="filled" />
+                      <TextField helperText="neutral" disabled id="filled-basic" label={priceLabel} variant="filled" />
+                      <TextField helperText="Median gain risk" id="filled-basic" label={priceLabel} variant="filled" />
+                      <TextField helperText="Worst gain risk" id="filled-basic" label={priceLabel} variant="filled" />
+                  </FormGroup>
+                </FormControl>
+
+            </Grid>
+          </Grid>
+        </Box>
+
+
+    );
 }
