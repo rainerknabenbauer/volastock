@@ -10,38 +10,43 @@ import { TextField } from '@mui/material';
 import EssentialStocksTableRows from '../components/EssentialStocksTableRows.tsx'
 import { priceLabel, textFieldVariant, totalInvestmentHint } from '../constants/constants';
 
-export default function Page() {
+export default function Page({ onStateChange }) {
     const [buyPrice, setBuyPrice] = useState(0);
     const [buyVolume, setBuyVolume] = useState(0);
     const [sellPrice, setSellPrice] = useState(0);
 
-    const [numberOfStocks, setNumberOfStocks] = useState('');
-    const [diffAbsolute, setDiffAbsolute] = useState('');
-    const [diffPercentage, setDiffPercentage] = useState('');
-    const [sellVolume, setSellVolume] = useState('');
+    const [numberOfStocks, setNumberOfStocks] = useState(0);
+    const [diffAbsolute, setDiffAbsolute] = useState(0);
+    const [diffPercentage, setDiffPercentage] = useState(0);
+    const [sellVolume, setSellVolume] = useState(0);
 
     useEffect(() => {
 
         if(buyPrice && buyVolume){
-
-            setNumberOfStocks(
-                Math.floor(buyVolume / buyPrice)
-            )
+            const newNumberOfStocks = Math.floor(buyVolume / buyPrice);
+            setNumberOfStocks(newNumberOfStocks);
 
             if(sellPrice) {
-                setDiffAbsolute(
-                    sellPrice - buyPrice
-                )
-                setDiffPercentage(
-                    Math.floor(sellPrice / buyPrice - 1)
-                )
-                setSellVolume(
-                    numberOfStocks * sellPrice
-                )
+                const newDiffAbsolute = sellPrice - buyPrice;
+                setDiffAbsolute(newDiffAbsolute);
+
+                const newDiffPercentage = Math.floor((sellPrice / buyPrice - 1) * 100);
+                setDiffPercentage(newDiffPercentage);
+
+                const newSellVolume = newNumberOfStocks * sellPrice;
+                setSellVolume(newSellVolume);
+
+                // Call parent callback with new values
+                onStateChange({ sellVolume: newSellVolume, numberOfStocks: newNumberOfStocks });
             }
         }
 
     }, [buyPrice, buyVolume, sellPrice]);
+
+    useEffect(() => {
+        console.log("publishing sellvolume and numberOfStocks")
+        onStateChange({ sellVolume: sellVolume, numberOfStocks: numberOfStocks });
+    }, [sellVolume, numberOfStocks]);
 
     return (
         <TableContainer component={Paper}>
@@ -68,6 +73,7 @@ export default function Page() {
                             onChange={(e) => setBuyPrice(e.target.value)}
                             tabIndex={1}
                             autoFocus
+                            inputProps={{ inputMode: 'numeric' }}
                         />
                     </TableCell>
                     <TableCell align="right">
@@ -77,7 +83,8 @@ export default function Page() {
                             variant={textFieldVariant}
                             value={sellPrice}
                             onChange={(e) => setSellPrice(e.target.value)}
-                            tabIndex={2}
+                            tabIndex={3}
+                            inputProps={{ inputMode: 'numeric' }}
                         />
                     </TableCell>
                 </TableRow>
@@ -90,7 +97,8 @@ export default function Page() {
                             variant={textFieldVariant}
                             value={buyVolume}
                             onChange={(e) => setBuyVolume(e.target.value)}
-                            tabIndex={3}
+                            tabIndex={2}
+                            inputProps={{ inputMode: 'numeric' }}
                         />
                     </TableCell>
                     <TableCell align="right"></TableCell>

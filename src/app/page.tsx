@@ -5,9 +5,27 @@ import { Grid, TextField, Typography, Box } from '@mui/material';
 import Graph from '../components/Graph.tsx'
 import SimpleTradeTable from '../components/SimpleTradeTable.tsx'
 import RebuyTradeTable from '../components/RebuyTradeTable.tsx'
+import * as constants from '../constants/constants';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
-    const priceLabel = "Price per piece"
+
+    const [sellVolume, setSellVolume] = useState(0);
+    const [numberOfStocks, setNumberOfStocks] = useState(0);
+
+    const handleSimpleTableData = (newSellVolume, newNumberOfStocks) => {
+        setSellVolume(newSellVolume);
+        setNumberOfStocks(newNumberOfStocks);
+    }
+
+    useEffect(() => {
+    console.log('main sellVolume changed', sellVolume);
+}, [sellVolume]);
+
+useEffect(() => {
+    console.log('main numberOfStocks changed', numberOfStocks);
+}, [numberOfStocks]);
+
 
     return (
         <>
@@ -17,7 +35,7 @@ export default function Page() {
           <Grid container spacing={2} style={{ height: '100%', display: 'flex', alignItems: 'stretch' }}>
             <Grid item xs={6} md={4} style={{ display: 'flex' }}>
 
-                <SimpleTradeTable />
+                <SimpleTradeTable onStateChange={handleSimpleTableData}/>
             </Grid>
             <Grid item xs={6} md={8}>
                 <Graph />
@@ -31,7 +49,7 @@ export default function Page() {
                 <Graph />
             </Grid>
             <Grid item xs={6} md={8}>
-                <RebuyTradeTable />
+                <RebuyTradeTable sellVolume={sellVolume} numberOfStocks={numberOfStocks} />
             </Grid>
           </Grid>
         </Box>
