@@ -9,8 +9,7 @@ import { TextField } from '@mui/material';
 import BuyStocksTableRows from './BuyStocksTableRows'
 import DiffStocksTableRows from './DiffStocksTableRows'
 
-const priceLabel = "per piece"
-const inputStyle = "outlined"
+import { priceLabel, textFieldVariant } from '../constants/constants';
 
 export default function Page() {
     return (
@@ -35,11 +34,11 @@ export default function Page() {
             <TableBody>
                 <TableRow>
                     <TableCell align="right">Buy price</TableCell>
-                    <TableCell align="right"><TextField id="buy-price" label={priceLabel} variant={inputStyle}/></TableCell>
-                    <TableCell align="right"><TextField id="buy-price" label={priceLabel} variant={inputStyle}/></TableCell>
-                    <TableCell align="right"><TextField id="buy-price" label={priceLabel} variant={inputStyle}/></TableCell>
-                    <TableCell align="right"><TextField id="buy-price" label={priceLabel} variant={inputStyle}/></TableCell>
-                    <TableCell align="right"><TextField id="buy-price" label={priceLabel} variant={inputStyle}/></TableCell>
+                    <TableCell align="right"><TextField id="buy-price-lowest" label={priceLabel} variant={textFieldVariant}/></TableCell>
+                    <TableCell align="right"><TextField id="buy-price-low" label={priceLabel} variant={textFieldVariant}/></TableCell>
+                    <TableCell align="right"><TextField id="buy-price-neutral" label={priceLabel} variant={textFieldVariant}/></TableCell>
+                    <TableCell align="right"><TextField id="buy-price-high" label={priceLabel} variant={textFieldVariant}/></TableCell>
+                    <TableCell align="right"><TextField id="buy-price-highest" label={priceLabel} variant={textFieldVariant}/></TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="right">Buy volume</TableCell>

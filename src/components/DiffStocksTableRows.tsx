@@ -1,8 +1,5 @@
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { TextField } from '@mui/material';
-
-const priceLabel = "Price per piece"
 
 export default function Page() {
     return (
