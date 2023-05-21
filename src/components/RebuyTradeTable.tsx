@@ -7,9 +7,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TextField } from '@mui/material';
+import RebuyColumn from '../types/RebuyColumn'
 
 import { priceLabel, textFieldVariant } from '../constants/constants';
 
+function createDefaultRebuyColumn(): RebuyColumn {
+    return {
+        buyPrice: 0,
+        volume: 0,
+        numberOfStocks: 0,
+        diffAbsolute: 0,
+        diffPercentage: '0%',
+        depotWert: 0,
+    };
+}
 
 export default function RebuyTradeTable({
     sellVolume: newBuyVolume,
@@ -62,37 +73,110 @@ export default function RebuyTradeTable({
 
     // Calculate user input
 
+    const [rebuyPriceLowestData, setRebuyPriceLowestData] = useState(createDefaultRebuyColumn())
+
     useEffect(() => {
         if(rebuyVolume && rebuyPriceLowest){
 
-            const newDiffAbsolute = oldSellPrice - rebuyPriceLowest;   // both values here
-            setDiffAbsolute(newDiffAbsolute);
+            const newRebuyPriceLowestData: RebuyColumn = {
+                buyPrice: rebuyPriceLowest,
+                volume: rebuyVolume,
+                numberOfStocks: numberOfStocks,
+                diffAbsolute: oldSellPrice - rebuyPriceLowest,
+                diffPercentage: Math.floor((oldSellPrice / rebuyPriceLowest - 1) * 100),
+                depotWert: 0, // only gets relevant on target price
+            }
+            setRebuyPriceLowestData(newRebuyPriceLowestData)
 
-            const newDiffPercentage = Math.floor((sellPrice / buyPrice - 1) * 100);
-            setDiffPercentage(newDiffPercentage);
-
-            const newSellVolume = newNumberOfStocks * sellPrice;
-            setSellVolume(newSellVolume);
-
-                // Call parent callback with new values
-            //    onStateChange({ sellVolume: newSellVolume, numberOfStocks: newNumberOfStocks });
+            console.log("createDefaultRebuyColumn " + newRebuyPriceLowestData)
+            //TODO callback for the graph
         }
     }, [rebuyVolume, rebuyPriceLowest])
 
+    const [rebuyPriceLowData, setRebuyPriceLowData] = useState(createDefaultRebuyColumn())
+
     useEffect(() => {
-        // todo muss was neues her
+        if(rebuyVolume && rebuyPriceLow){
+
+            const newRebuyPriceLowData: RebuyColumn = {
+                buyPrice: rebuyPriceLow,
+                volume: rebuyVolume,
+                numberOfStocks: numberOfStocks,
+                diffAbsolute: oldSellPrice - rebuyPriceLow,
+                diffPercentage: Math.floor((oldSellPrice / rebuyPriceLow - 1) * 100),
+                depotWert: 0, // only gets relevant on target price
+            }
+            setRebuyPriceLowData(newRebuyPriceLowData)
+
+            console.log("createDefaultRebuyColumn " + newRebuyPriceLowData)
+            //TODO callback for the graph
+        }
     }, [rebuyVolume, rebuyPriceLow])
 
+
+
+
+    const [rebuyPriceNeutralData, setRebuyPriceNeutralData] = useState(createDefaultRebuyColumn())
+
     useEffect(() => {
-        // todo muss was neues her
+        if(rebuyVolume && rebuyPriceNeutral){
+
+            const newRebuyPriceNeutralData: RebuyColumn = {
+                buyPrice: rebuyPriceNeutral,
+                volume: rebuyVolume,
+                numberOfStocks: numberOfStocks,
+                diffAbsolute: oldSellPrice - rebuyPriceNeutral,
+                diffPercentage: Math.floor((oldSellPrice / rebuyPriceNeutral - 1) * 100),
+                depotWert: 0, // only gets relevant on target price
+            }
+            setRebuyPriceNeutralData(newRebuyPriceNeutralData)
+
+            console.log("createDefaultRebuyColumn " + newRebuyPriceNeutralData)
+            //TODO callback for the graph
+        }
     }, [rebuyVolume, rebuyPriceNeutral])
 
-    useEffect(() => {
-        // todo muss was neues her
-    }, [rebuyVolume, rebuyPriceHigh])
+
+
+
+    const [rebuyPriceHighData, setRebuyPriceHighData] = useState(createDefaultRebuyColumn())
 
     useEffect(() => {
-        // todo muss was neues her
+        if(rebuyVolume && rebuyPriceHigh){
+
+            const newRebuyPriceHighData: RebuyColumn = {
+                buyPrice: rebuyPriceHigh,
+                volume: rebuyVolume,
+                numberOfStocks: numberOfStocks,
+                diffAbsolute: oldSellPrice - rebuyPriceHigh,
+                diffPercentage: Math.floor((oldSellPrice / rebuyPriceHigh - 1) * 100),
+                depotWert: 0, // only gets relevant on target price
+            }
+            setRebuyPriceHighData(newRebuyPriceHighData)
+
+            console.log("createDefaultRebuyColumn " + newRebuyPriceHighData)
+            //TODO callback for the graph
+        }
+    }, [rebuyVolume, rebuyPriceHigh])
+
+    const [rebuyPriceHighestData, setRebuyPriceHighestData] = useState(createDefaultRebuyColumn())
+
+    useEffect(() => {
+        if(rebuyVolume && rebuyPriceHighest){
+
+            const newRebuyPriceHighestData: RebuyColumn = {
+                buyPrice: rebuyPriceHighest,
+                volume: rebuyVolume,
+                numberOfStocks: numberOfStocks,
+                diffAbsolute: oldSellPrice - rebuyPriceHighest,
+                diffPercentage: Math.floor((oldSellPrice / rebuyPriceHighest - 1) * 100),
+                depotWert: 0, // only gets relevant on target price
+            }
+            setRebuyPriceHighestData(newRebuyPriceHighestData)
+
+            console.log("createDefaultRebuyColumn " + newRebuyPriceHighestData)
+            //TODO callback for the graph
+        }
     }, [rebuyVolume, rebuyPriceHighest])
 
     return (
@@ -175,23 +259,23 @@ export default function RebuyTradeTable({
                     </TableRow>
                     <TableRow>
                         <TableCell align="right">Diff absolute</TableCell>
-                        <TableCell id="buy-price-lowest-diff-absolute" align="center"></TableCell>
-                        <TableCell id="buy-price-low-diff-absolute" align="center"></TableCell>
-                        <TableCell id="buy-price-neutral-diff-absolute" align="center"></TableCell>
-                        <TableCell id="buy-price-high-diff-absolute" align="center"></TableCell>
-                        <TableCell id="buy-price-highest-diff-absolute" align="center"></TableCell>
+                        <TableCell id="buy-price-lowest-diff-absolute" align="center">{rebuyPriceLowestData.diffAbsolute}</TableCell>
+                        <TableCell id="buy-price-low-diff-absolute" align="center">{rebuyPriceLowData.diffAbsolute}</TableCell>
+                        <TableCell id="buy-price-neutral-diff-absolute" align="center">{rebuyPriceNeutralData.diffAbsolute}</TableCell>
+                        <TableCell id="buy-price-high-diff-absolute" align="center">{rebuyPriceHighData.diffAbsolute}</TableCell>
+                        <TableCell id="buy-price-highest-diff-absolute" align="center">{rebuyPriceHighestData.diffAbsolute}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell align="right">Diff percentage</TableCell>
-                        <TableCell id="buy-price-lowest-diff-percentage" align="center"></TableCell>
-                        <TableCell id="buy-price-low-diff-percentage" align="center"></TableCell>
-                        <TableCell id="buy-price-neutral-diff-percentage" align="center"></TableCell>
-                        <TableCell id="buy-price-high-diff-percentage" align="center"></TableCell>
-                        <TableCell id="buy-price-highest-diff-percentage" align="center"></TableCell>
+                        <TableCell id="buy-price-lowest-diff-percentage" align="center">{rebuyPriceLowestData.diffPercentage}</TableCell>
+                        <TableCell id="buy-price-low-diff-percentage" align="center">{rebuyPriceLowData.diffPercentage}</TableCell>
+                        <TableCell id="buy-price-neutral-diff-percentage" align="center">{rebuyPriceNeutralData.diffPercentage}</TableCell>
+                        <TableCell id="buy-price-high-diff-percentage" align="center">{rebuyPriceHighData.diffPercentage}</TableCell>
+                        <TableCell id="buy-price-highest-diff-percentage" align="center">{rebuyPriceHighestData.diffPercentage}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell align="right">Depot</TableCell>
-                        <TableCell id="buy-price-lowest-depot" align="center"></TableCell>
+                        <TableCell id="buy-price-lowest-depot" align="center">{rebuyPriceLowestData.depot}</TableCell>
                         <TableCell id="buy-price-low-depot" align="center"></TableCell>
                         <TableCell id="buy-price-neutral-depot" align="center"></TableCell>
                         <TableCell id="buy-price-high-depot" align="center"></TableCell>
