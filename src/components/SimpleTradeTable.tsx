@@ -44,9 +44,13 @@ export default function Page({ onStateChange }) {
     }, [buyPrice, buyVolume, sellPrice]);
 
     useEffect(() => {
-        console.log("publishing sellvolume and numberOfStocks")
-        onStateChange({ newSellVolume: sellVolume, newNumberOfStocks: numberOfStocks });
-    }, [sellVolume, numberOfStocks]);
+        onStateChange({
+            newBuyVolume: buyVolume,
+            newSellVolume: sellVolume,
+            newNumberOfStocks: numberOfStocks,
+            newSellPrice: sellPrice
+        });
+    }, [sellVolume, numberOfStocks, buyVolume, sellPrice]);
 
     return (
         <TableContainer component={Paper}>

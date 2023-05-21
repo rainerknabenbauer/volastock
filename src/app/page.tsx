@@ -12,20 +12,15 @@ export default function Page() {
 
     const [sellVolume, setSellVolume] = useState(0);
     const [numberOfStocks, setNumberOfStocks] = useState(0);
+    const [buyVolume, setBuyVolume] = useState(0);
+    const [sellPrice, setSellPrice] = useState(0);
 
-    const handleSimpleTableData = ({newSellVolume, newNumberOfStocks}) => {
+    const handleSimpleTableData = ({newSellVolume, newNumberOfStocks, newBuyVolume, newSellPrice}) => {
         setSellVolume(newSellVolume);
         setNumberOfStocks(newNumberOfStocks);
+        setBuyVolume(newBuyVolume)
+        setSellPrice(newSellPrice)
     }
-
-    useEffect(() => {
-    console.log('main sellVolume changed', sellVolume);
-}, [sellVolume]);
-
-useEffect(() => {
-    console.log('main numberOfStocks changed', numberOfStocks);
-}, [numberOfStocks]);
-
 
     return (
         <>
@@ -49,7 +44,11 @@ useEffect(() => {
                 <Graph />
             </Grid>
             <Grid item xs={6} md={8}>
-                <RebuyTradeTable sellVolume={sellVolume} numberOfStocks={numberOfStocks} />
+                <RebuyTradeTable
+                    sellVolume={sellVolume}
+                    numberOfStocks={numberOfStocks}
+                    sellPrice={sellPrice}
+                />
             </Grid>
           </Grid>
         </Box>
