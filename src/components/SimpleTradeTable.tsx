@@ -45,7 +45,7 @@ export default function Page({ onStateChange }) {
 
     useEffect(() => {
         console.log("publishing sellvolume and numberOfStocks")
-        onStateChange({ sellVolume: sellVolume, numberOfStocks: numberOfStocks });
+        onStateChange({ newSellVolume: sellVolume, newNumberOfStocks: numberOfStocks });
     }, [sellVolume, numberOfStocks]);
 
     return (

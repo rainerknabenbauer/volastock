@@ -13,7 +13,7 @@ export default function Page() {
     const [sellVolume, setSellVolume] = useState(0);
     const [numberOfStocks, setNumberOfStocks] = useState(0);
 
-    const handleSimpleTableData = (newSellVolume, newNumberOfStocks) => {
+    const handleSimpleTableData = ({newSellVolume, newNumberOfStocks}) => {
         setSellVolume(newSellVolume);
         setNumberOfStocks(newNumberOfStocks);
     }

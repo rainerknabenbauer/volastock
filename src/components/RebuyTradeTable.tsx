@@ -10,26 +10,19 @@ import { TextField } from '@mui/material';
 
 import { priceLabel, textFieldVariant } from '../constants/constants';
 
-export default function RebuyTradeTable({ initialSellVolume, initialNumberOfStocks }) {
+export default function RebuyTradeTable({ sellVolume: initialSellVolume, numberOfStocks: initialNumberOfStocks }) {
 
     const [sellVolume, setSellVolume] = useState(initialSellVolume);
     const [numberOfStocks, setNumberOfStocks] = useState(initialNumberOfStocks);
 
     useEffect(() => {
-        console.log('cc sellVolume changed: ' + sellVolume);
-    }, [sellVolume]);
-
-    useEffect(() => {
-        console.log('cc numberOfStocks changed' + numberOfStocks);
-    }, [numberOfStocks]);
-
-
-    useEffect(() => {
-        console.log('cc initialSellVolume changed: ' + sellVolume);
+        setSellVolume(initialSellVolume);
+        console.log('cc initialSellVolume changed: ' + initialSellVolume);
     }, [initialSellVolume]);
 
     useEffect(() => {
-        console.log('cc initialNumberOfStocks changed' + numberOfStocks);
+        setNumberOfStocks(initialNumberOfStocks);
+        console.log('cc initialNumberOfStocks changed' + initialNumberOfStocks);
     }, [initialNumberOfStocks]);
 
     return (
