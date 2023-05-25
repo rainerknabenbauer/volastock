@@ -5,6 +5,7 @@ import { Grid, TextField, Typography, Box } from '@mui/material';
 import Graph from '../components/Graph.tsx'
 import SimpleTradeTable from '../components/SimpleTradeTable.tsx'
 import RebuyTradeTable from '../components/RebuyTradeTable.tsx'
+import RiskAssessment from '../components/RiskAssessment.tsx'
 import * as constants from '../constants/constants';
 import { useState, useEffect } from 'react';
 
@@ -51,6 +52,9 @@ export default function Page() {
                 />
             </Grid>
           </Grid>
+        </Box>
+        <Box sx={{ flexGrow: 1 }}>
+          <RiskAssessment />
         </Box>
         </>
     );
